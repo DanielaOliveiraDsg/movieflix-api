@@ -7,6 +7,8 @@ const prisma = new PrismaClient();
 
 app.use(express.json());
 
+// ---- METHOD GET ----
+
 app.get("/movies", async (_, res) => {
     const movies = await prisma.movie.findMany({
         orderBy: {
@@ -19,6 +21,8 @@ app.get("/movies", async (_, res) => {
     });
     res.json(movies);
 });
+
+// ------- METHOD POST -------
 
 app.post("/movies", async (req, res) => {
     const { title, genre_id, language_id, oscar_count, release_date } =
@@ -53,6 +57,41 @@ app.post("/movies", async (req, res) => {
     }
 
     res.status(201).send();
+});
+
+//------METHOD PUT ------- updating data
+
+app.put("/movies/:id", async (req, res) => {
+    // get register's id to be updated
+    const id = Number(req.params.id);
+
+    try {
+        // checking if movie id exist and messaging client
+        const movie = await prisma.movie.findUnique({
+            where: { id },
+        });
+
+        if (!movie) {
+            return res.status(404).send({ message: "Movie does not exist" });
+        }
+
+        // get data object from body
+        const data = { ...req.body }; //spread to get anything from body
+        data.release_date = data.release_date
+            ? new Date(data.release_date)
+            : undefined;
+
+        // get movie data to be updated and update it on prisma
+        await prisma.movie.update({
+            where: { id: id },
+            data: data,
+        });
+    } catch (error) {
+        return res.status(500).send({message: "Fail to update record"})
+    }
+
+    // return status of update
+    res.status(200).send();
 });
 
 app.listen(port, () => {
