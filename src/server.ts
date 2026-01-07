@@ -87,10 +87,31 @@ app.put("/movies/:id", async (req, res) => {
             data: data,
         });
     } catch (error) {
-        return res.status(500).send({message: "Fail to update record"})
+        return res.status(500).send({ message: "Fail to update record" });
     }
 
     // return status of update
+    res.status(200).send();
+});
+
+// ------ METHOD DELETE ------
+app.delete("/movies/:id", async (req, res) => {
+    const id = Number(req.params.id);
+
+    try {
+        const movie = await prisma.movie.findUnique({
+            where: { id },
+        });
+
+        if (!movie) {
+            return res.status(404).send({ message: "Movie does not exist" });
+        }
+
+        await prisma.movie.delete({ where: { id } });
+    } catch (error) {
+        return res.status(500).send({message: "Fail to remove record"})
+    }
+
     res.status(200).send();
 });
 
