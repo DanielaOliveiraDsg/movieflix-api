@@ -75,7 +75,7 @@ app.put("/movies/:id", async (req, res) => {
         });
 
         if (!movie) {
-            return res.status(404).send({ message: "Movie does not exist" });
+            return res.status(404).send({ message: "Movie not found" });
         }
 
         // get data object from body
@@ -107,7 +107,7 @@ app.delete("/movies/:id", async (req, res) => {
         });
 
         if (!movie) {
-            return res.status(404).send({ message: "Movie does not exist" });
+            return res.status(404).send({ message: "Movie not found" });
         }
 
         await prisma.movie.delete({ where: { id } });

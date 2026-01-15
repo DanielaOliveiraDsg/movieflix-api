@@ -8,6 +8,7 @@
     "paths": {
         "/movies": {
             "get": {
+                "tags": ["Movie"],
                 "summary": "Get all movies",
                 "responses": {
                     "200": {
@@ -22,6 +23,70 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "put": {
+                "tags": ["Movie"],
+                "summary": "Updating movie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Movie ID to be updated",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "schema": {
+                            "application/json": {
+                                "$ref": "#/components/schemas/MovieInput"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Movie update success"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Fail to update record"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Movie"],
+                "summary": "Deleting movie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Movie ID to be deleted",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Movie delete success"
+                    },
+                    "404": {
+                        "description": "Movie not found"
+                    },
+                    "500": {
+                        "description": "Fail to remove record"
                     }
                 }
             }
@@ -42,7 +107,7 @@
                     },
                     "genre_id": {
                         "type": "integer",
-                        "description": "Movie genre"
+                        "description": "Movie genre ID"
                     },
                     "genres": {
                         "type": "object",
@@ -59,7 +124,7 @@
                     },
                     "language_id": {
                         "type": "integer",
-                        "description": "Movie language"
+                        "description": "Movie language ID"
                     },
                     "languages": {
                         "type": "object",
@@ -73,6 +138,39 @@
                                 "description": "Movie Language"
                             }
                         }
+                    },
+                    "oscar_count": {
+                        "type": "integer",
+                        "description": "Movie number of Oscars"
+                    },
+                    "release_date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Movie date release"
+                    }
+                }
+            },
+            "MovieInput": {
+                "type": "object",
+                "required": [
+                    "title",
+                    "genre_id",
+                    "language_id",
+                    "oscar_count",
+                    "release_date"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Movie title"
+                    },
+                    "genre_id": {
+                        "type": "integer",
+                        "description": "Movie genre ID"
+                    },
+                    "language_id": {
+                        "type": "integer",
+                        "description": "Movie language ID"
                     },
                     "oscar_count": {
                         "type": "integer",
