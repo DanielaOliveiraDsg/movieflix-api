@@ -52,8 +52,8 @@
                         }
                     }
                 },
-                "responses":{
-                    "200":{
+                "responses": {
+                    "200": {
                         "description": "Movie update success"
                     },
                     "404": {
@@ -78,8 +78,8 @@
                         }
                     }
                 ],
-                "responses":{
-                    "200":{
+                "responses": {
+                    "200": {
                         "description": "Movie delete success"
                     },
                     "404": {
@@ -87,6 +87,40 @@
                     },
                     "500": {
                         "description": "Fail to remove record"
+                    }
+                }
+            }
+        },
+        "/movies/{genreName}": {
+            "get": {
+                "tags": ["Movie"],
+                "summary": "Filter movies by genre",
+                "parameters": [
+                    {
+                        "name": "genre name",
+                        "in": "path",
+                        "required": true,
+                        "description": "Movie genre name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                         "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Movie"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Fail to filter genre"
                     }
                 }
             }
