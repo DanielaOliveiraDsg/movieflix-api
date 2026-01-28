@@ -45,8 +45,8 @@
                 "requestBody": {
                     "required": true,
                     "content": {
-                        "schema": {
-                            "application/json": {
+                        "application/json": {
+                            "schema": {
                                 "$ref": "#/components/schemas/MovieInput"
                             }
                         }
@@ -54,7 +54,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Movie update success"
+                        "description": "Movie updated successfully"
                     },
                     "404": {
                         "description": "Movie not found"
@@ -80,7 +80,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Movie delete success"
+                        "description": "Movie deleted successfully"
                     },
                     "404": {
                         "description": "Movie not found"
@@ -97,7 +97,7 @@
                 "summary": "Filter movies by genre",
                 "parameters": [
                     {
-                        "name": "genre name",
+                        "name": "genreName",
                         "in": "path",
                         "required": true,
                         "description": "Movie genre name",
@@ -108,7 +108,7 @@
                 ],
                 "responses": {
                     "200": {
-                         "content": {
+                        "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
@@ -120,7 +120,7 @@
                         }
                     },
                     "500": {
-                        "description": "Fail to filter genre"
+                        "description": "Fail to find genre"
                     }
                 }
             }
